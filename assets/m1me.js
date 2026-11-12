@@ -204,7 +204,27 @@ async function render(anim) {
     X.globalAlpha = Math.max(0, (k - .45) / .55); X.drawImage(fin, 0, 0); X.globalAlpha = 1;
     k < 1 ? requestAnimationFrame(step) : done(); }; requestAnimationFrame(step); setTimeout(done, D + 400); });
   X.drawImage(fin, 0, 0);
+  keep();
 }
+// ---------------------------------------------------------------- my children: a small copy of every child, in this browser only
+function kids() { try { return JSON.parse(localStorage.getItem('m1me:kids') || '[]'); } catch { return []; } }
+function keep() {
+  const t = document.createElement('canvas'); t.width = t.height = 256; t.getContext('2d').drawImage(C, 0, 0, 256, 256);
+  const k = { n: $('#cname').value, t: $('#ctick').value.toUpperCase(), i: t.toDataURL('image/jpeg', .82), at: Date.now() };
+  const L = [k, ...kids().filter(x => x.n !== k.n)].slice(0, 24);
+  try { localStorage.setItem('m1me:kids', JSON.stringify(L)); } catch {}
+  drawKids();
+}
+function drawKids() {
+  const L = kids(); if (!L.length) return;
+  $('#kidlist').innerHTML = L.map((k, i) => `<div class="kid" style="animation-delay:${i * 40}ms"><img src="${k.i}" alt=""><div><b>${esc(k.n)}</b><span>$${esc(k.t)}</span><button type="button" data-k="${i}">save</button></div></div>`).join('');
+}
+$('#kidlist').addEventListener('click', e => { const i = e.target.dataset.k; if (i == null) return; const k = kids()[+i]; if (!k) return; const a = document.createElement('a'); a.href = k.i; a.download = `${k.t.toLowerCase() || 'm1me'}.jpg`; document.body.appendChild(a); a.click(); a.remove(); });
+$('#surprise').addEventListener('click', () => { const L = FRESH.list; if (L.length < 2) return toast('the feed is still loading. try again in a second.');
+  const a = L[Math.floor(Math.random() * L.length)]; let b = a; while (b === a) b = L[Math.floor(Math.random() * L.length)];
+  const m = c => ({ name: c.name, sym: c.sym, src: `mined from ${c.mint.slice(0, 4)}…${c.mint.slice(-4)}`, url: via(c.img), mint: c.mint });
+  fill('a', m(a)); fill('b', m(b)); $('#lab').scrollIntoView({ behavior: RM ? 'auto' : 'smooth' }); setTimeout(pair, 700); });
+drawKids();
 $('.pair').addEventListener('click', pair);
 $('#reroll').addEventListener('click', () => { const ms = Object.keys(MODES); LAB.v++; LAB.mode = ms[(ms.indexOf(LAB.mode) + 1) % ms.length]; $$('.modes button').forEach(x => x.classList.toggle('on', x.dataset.mode === LAB.mode)); render(true); });
 function blob() { return new Promise(r => C.toBlob(r, 'image/png')); }

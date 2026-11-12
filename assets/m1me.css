@@ -161,3 +161,10 @@ h2{font:400 clamp(30px,4.6vw,58px)/1 Anton;letter-spacing:.01em;margin:0 0 46px;
 .pr img{width:56px;height:56px;border-radius:10px;object-fit:cover;background:#151516}
 .pr .x{color:var(--red);font:400 22px/1 Anton}
 .pr .kid{margin-left:auto;text-align:right}.pr .kid b{display:block;font:400 18px/1.1 Anton}.pr .kid span{color:var(--beige);font-size:12px}
+
+.nb{background:none;border:0;color:var(--red);cursor:pointer;padding:0;font:inherit}.nb:hover{color:var(--ink)}
+.kids{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;max-width:1180px;margin:0 auto}
+.kid{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#0d0d0e;opacity:0;animation:cardin .6s ease forwards}
+.kid img{width:100%;aspect-ratio:1;display:block}.kid div{padding:8px 10px}.kid b{display:block;font:400 17px/1.1 Anton;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kid span{color:var(--beige);font-size:12px}
+.kid button{margin-top:6px;width:100%;min-height:30px;border-radius:999px;border:1px solid var(--line);background:none;cursor:pointer;font-size:12px}.kid button:hover{background:var(--ink);color:#0a0a0b}
+@media (max-width:1100px){nav{gap:14px;font-size:13px}}
