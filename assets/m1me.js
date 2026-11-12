@@ -37,11 +37,11 @@ async function screenLoop() {
 async function intro() {
   const img = $('.rig .pc'), seen = (() => { try { return sessionStorage.getItem('m1me:in'); } catch { return null; } })();
   try { await img.decode(); } catch {}
-  const go = () => { document.body.classList.remove('booting'); $('.screen').classList.add('on'); try { sessionStorage.setItem('m1me:in', '1'); } catch {} };
+  const go = () => { $('.rig').classList.add('pull'); document.body.classList.remove('booting'); $('.screen').classList.add('on'); try { sessionStorage.setItem('m1me:in', '1'); } catch {} };
   $('.skip').addEventListener('click', go);
   addEventListener('keydown', go, { once: true });
-  if (seen || RM) { go(); } else { await sleep(150); requestAnimationFrame(go); }
-  setTimeout(screenLoop, seen ? 200 : 1300);
+  if (seen || RM) { go(); } else { $('.screen').classList.add('on'); tty.innerHTML = ''; await type('booting the lab…', 'm', 22); await sleep(350); go(); }
+  setTimeout(() => { tty.innerHTML = ''; screenLoop(); }, seen ? 200 : 1600);
 }
 
 // ---------------------------------------------------------------- fresh memes, live from dexscreener
@@ -61,7 +61,7 @@ async function loadFresh() {
       by.set(t.address, { mint: t.address, name: t.name, sym: t.symbol, img: (p.info && p.info.imageUrl) || icon[t.address], born: p.pairCreatedAt, liq: p.liquidity && p.liquidity.usd || 0 });
     }
     const list = ids.map(i => by.get(i)).filter(x => x && x.img && x.sym);
-    if (list.length) { FRESH.list = list.sort((a, b) => (b.born || 0) - (a.born || 0)); FRESH.at = Date.now(); drawFresh(); }
+    if (list.length) { FRESH.list = list.sort((a, b) => (b.born || 0) - (a.born || 0)); FRESH.at = Date.now(); drawFresh(); drawPairs(); }
     else if (!FRESH.list.length) $('#grid').innerHTML = '<p class="wait">nothing fresh to show right now. paste an address or upload an image instead.</p>';
   } catch {
     if (!FRESH.list.length) $('#grid').innerHTML = '<p class="wait">the feed did not answer. paste an address or upload an image instead.</p>';
@@ -83,6 +83,17 @@ $('#grid').addEventListener('click', e => {
   fill(to, { name: c.name, sym: c.sym, src: `mined from ${c.mint.slice(0, 4)}…${c.mint.slice(-4)}`, url: via(c.img), mint: c.mint });
   $('#lab').scrollIntoView({ behavior: RM ? 'auto' : 'smooth' });
 });
+
+function drawPairs() {
+  const L = FRESH.list; if (L.length < 2) return; const out = [];
+  for (let i = 0; i < Math.min(6, Math.floor(L.length / 2)); i++) out.push([L[i * 2], L[i * 2 + 1]]);
+  PAIRS = out;
+  $('#pairlist').innerHTML = out.map(([a, b], i) => `<div class="pr" data-p="${i}" style="animation-delay:${i * 60}ms"><img src="${esc(a.img)}" alt=""><span class="x">×</span><img src="${esc(b.img)}" alt=""><div class="kid"><b>${esc(child(a.name, b.name, 0))}</b><span>$${esc(tick(a.sym, b.sym, 0))}</span></div></div>`).join('');
+}
+let PAIRS = [];
+$('#pairlist').addEventListener('click', e => { const el = e.target.closest('.pr'); if (!el) return; const [a, b] = PAIRS[+el.dataset.p] || []; if (!a) return;
+  const m = c => ({ name: c.name, sym: c.sym, src: `mined from ${c.mint.slice(0, 4)}…${c.mint.slice(-4)}`, url: via(c.img), mint: c.mint });
+  fill('a', m(a)); fill('b', m(b)); $('#lab').scrollIntoView({ behavior: RM ? 'auto' : 'smooth' }); setTimeout(pair, 700); });
 
 // ---------------------------------------------------------------- the two slots
 const SLOT = { a: null, b: null };
