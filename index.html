@@ -12,13 +12,13 @@
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/pc.jpg" as="image">
-<link rel="stylesheet" href="/assets/m1me.css?v=1">
+<link rel="stylesheet" href="/assets/m1me.css?v=2">
 </head>
 <body class="booting">
 
 <header class="top">
   <span class="live"><span class="dot"></span>lab online</span>
-  <nav><a href="#lab">lab</a><a href="#pairs">pairs</a><a href="#fresh">fresh</a><a href="#how">how</a><a href="#faq">faq</a><a href="https://pump.fun/create" target="_blank" rel="noopener">pump.fun</a></nav>
+  <nav><a href="#lab">lab</a><a href="#pairs">pairs</a><a href="#fresh">fresh</a><a href="#kids">my children</a><a href="#how">how</a><a href="#faq">faq</a><button type="button" class="nb" id="surprise">surprise me</button><a href="https://pump.fun/create" target="_blank" rel="noopener">pump.fun</a></nav>
   <a class="cta-s" href="#lab">mine a meme</a>
 </header>
 
@@ -82,7 +82,7 @@
           <button type="button" id="save" class="btn ghostb">save image</button>
           <button type="button" id="launch" class="btn">launch on pump.fun</button>
         </div>
-        <p class="note" id="lnote">launch saves the image, copies the name, ticker and line, and opens pump.fun's create page. you sign there, with your wallet.</p>
+        
       </div>
     </div>
   </section>
@@ -101,12 +101,18 @@
     <p class="src-line">live from dexscreener · refreshes every minute</p>
   </section>
 
+  <section class="band" id="kids">
+    <div class="eyebrow">my children</div>
+    <h2>everything you paired, kept in this browser.</h2>
+    <div class="kids" id="kidlist"><p class="wait">nothing paired yet. pair two memes and they show up here.</p></div>
+  </section>
+
   <section class="band" id="how">
     <div class="eyebrow">04 · how</div>
     <div class="steps">
       <div class="step"><span class="n">1</span><h3>mine</h3><p>paste any coin's address, pick one that was born a minute ago, or bring your own image. it lands in a slot.</p></div>
       <div class="step"><span class="n">2</span><h3>pair</h3><p>put a second meme in the other slot and press pair. the lab splices the two pictures and the two names into one child.</p></div>
-      <div class="step"><span class="n">3</span><h3>launch</h3><p>keep it or re-roll it. then take it to pump.fun: the image is saved and the details are copied, so it takes a minute.</p></div>
+      <div class="step"><span class="n">3</span><h3>launch</h3><p>keep it or re-roll it, then press launch. the child goes to pump.fun with everything ready, and your wallet signs.</p></div>
     </div>
   </section>
 
@@ -115,7 +121,7 @@
     <div class="faq">
       <details><summary>what does mining a meme mean?</summary><p>picking a meme to work with. paste a solana coin's address and the lab reads its name, ticker and picture. or upload any image and name it yourself.</p></details>
       <details><summary>what happens when i pair two?</summary><p>the lab makes a child: one picture spliced from both, a name made from both names, a ticker made from both tickers. four splices: splice, ghost, graft, mosaic. re-roll as much as you like.</p></details>
-      <details><summary>does m1me launch the coin for me?</summary><p>no. you launch it on pump.fun yourself, with your own wallet. m1me never holds keys or money. it only makes the child and hands it to you.</p></details>
+      <details><summary>how does launching work?</summary><p>press launch and the child goes to pump.fun's launch page with its picture, name, ticker and line ready. your own wallet signs. m1me never holds keys or money.</p></details>
       <details><summary>does it cost anything?</summary><p>the lab is free. pump.fun's own launch costs apply when you launch there.</p></details>
       <details><summary>is anything i upload stored?</summary><p>no. pictures you upload never leave your browser. coin pictures are fetched through this site only so your browser can splice them.</p></details>
     </div>
@@ -123,6 +129,6 @@
 </main>
 
 <div class="toast" id="toast" role="status"></div>
-<script src="/assets/m1me.js?v=1" type="module"></script>
+<script src="/assets/m1me.js?v=2" type="module"></script>
 </body>
 </html>
